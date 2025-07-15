@@ -68,6 +68,24 @@ add_executable(UGR_Screen_25
     startup_stm32f405xx.s
 )
 
+# Set full paths to tools
+set(OBJCOPY_PATH "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/14.3 rel1/bin/arm-none-eabi-objcopy.exe")
+set(PROGRAMMER_CLI "C:/Program Files/STMicroelectronics/STM32Cube/STM32CubeProgrammer/bin/STM32_Programmer_CLI.exe")
+
+# Post-build step: convert ELF to BIN and flash to STM32
+add_custom_command(TARGET UGR_Screen_25 POST_BUILD
+    COMMAND "${OBJCOPY_PATH}" -O binary
+        ${CMAKE_CURRENT_BINARY_DIR}/UGR_Screen_25.elf
+        ${CMAKE_CURRENT_BINARY_DIR}/UGR_Screen_25.bin
+    COMMENT "✓ Converting ELF to BIN"
+
+    COMMAND "${PROGRAMMER_CLI}"
+        -c port=SWD
+        -w ${CMAKE_CURRENT_BINARY_DIR}/UGR_Screen_25.bin 0x08000000
+        -rst
+    COMMENT "✓ Flashing to STM32F405 via ST-Link"
+)
+
 
 target_link_libraries(UGR_Screen_25 PRIVATE stm32cubemx)
 
