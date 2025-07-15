@@ -73,7 +73,7 @@ static void MX_CAN2_Init(void);
 
 
 //THIS IS ALL THE CAN STUFF FOR CAN RX
-int charge = 69, cell_tmp = 22, water_tmp = 33, speed = 255; 
+int charge = 50, cell_tmp = 20, water_tmp = 20, speed = 0; 
 int temp = 30;
 
 CAN_RxHeaderTypeDef   RxHeader;
@@ -304,9 +304,9 @@ static void MX_CAN2_Init(void)
   sFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
   sFilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;
   // Accept IDs
-  sFilterConfig.FilterIdHigh = 0x900 << 5;
+  sFilterConfig.FilterIdHigh = 0x650 << 5;
   sFilterConfig.FilterIdLow = 0x0000;
-  sFilterConfig.FilterMaskIdHigh = 0x900 << 5;
+  sFilterConfig.FilterMaskIdHigh = 0x650 << 5;
   sFilterConfig.FilterMaskIdLow = 0x0000;
   sFilterConfig.FilterFIFOAssignment = CAN_RX_FIFO0;
   sFilterConfig.FilterActivation = ENABLE;
